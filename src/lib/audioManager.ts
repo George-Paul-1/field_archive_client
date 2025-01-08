@@ -48,7 +48,6 @@ export class AudioManager {
 
     async loadAudio(url: string): Promise<void> {
         console.log('loading audio...');
-        console.log()
         const response = await fetch(url);
         if (!response.ok) {
             throw new Error(`Error ${response.status}: failed to fetch`);
