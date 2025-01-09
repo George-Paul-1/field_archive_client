@@ -20,8 +20,10 @@
         visualiser = new Visualiser(canvas);
 
         visualiser.setCanvas();
-        await manager.fetchAudioURL();
-        await manager.play()
+        // await manager.fetchAudioIDs();
+        // await manager.fetchAudioURL();
+        // await manager.play()
+        await manager.start()
         isStarted = true;
 
         function renderFrame(): void {
