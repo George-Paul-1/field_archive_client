@@ -1,25 +1,29 @@
 import { testEnv } from "../environments/test";
 
+// TODO : Break class up into more specialised classes - probably some sort of repository for dealing with API so not fetching in functions here? 
+
 export class AudioManager {
+    
     private dbConnect: string;
+    private urls: string[]; 
+
     private audioCtx: AudioContext = new AudioContext;
     private analyser: AnalyserNode = this.audioCtx.createAnalyser();
-    private source: AudioBufferSourceNode | null;
+    private source: AudioBufferSourceNode = this.audioCtx.createBufferSource();
+    private gainNode: GainNode = this.audioCtx.createGain();
+
     private bufferLength: number = 0;
     private duration: number | null;
-    private gainNode: GainNode = this.audioCtx.createGain();
-    private urls: string[]; 
-    private count: number
+    private count: number;
 
     constructor(dbConnect: string) {
-        this.dbConnect = dbConnect;
-        this.source = null; 
+        this.dbConnect = dbConnect;; 
         this.duration = null;
         this.urls = []
         this.count = 0
     }
 
-    async fetchAudioIDs(): Promise<void> {
+    async fetchAudioURLs(): Promise<void> {
         try {
             const response: Response = await fetch(testEnv.url3)
             if (!response.ok) {
@@ -44,7 +48,6 @@ export class AudioManager {
                 throw new Error("couldn't fetch audio URl")
             }
             const data = await response.json();
-            console.log(data)
             if (data.AudioLocation) {
                 let audioURL = testEnv.url2 + data.AudioLocation; // Construct full URL for local audio file
                 console.log('received audio URL:', audioURL);
@@ -52,11 +55,40 @@ export class AudioManager {
             } else {
                 throw new Error('no audio URL in the response');
             }
-            
         } catch (error) {
             console.error("error fetching audio url from API:", error)
             return ""
         }
+    }
+
+    startAnalyser(): void {
+        this.analyser = this.audioCtx.createAnalyser(); 
+        this.analyser.fftSize = 2048;
+        this.analyser.minDecibels = -90;
+    }
+
+    startCtx(): void {
+        this.audioCtx = new AudioContext({
+            latencyHint: "interactive",
+            sampleRate: 44100});
+    }
+
+    async createBuffer(response: Response): Promise<AudioBuffer> {
+        this.bufferLength = this.analyser.frequencyBinCount;
+        const audioData = await response.arrayBuffer();
+        const buffer = await this.audioCtx.decodeAudioData(audioData);
+        return buffer
+    }
+
+    createSource(buffer: AudioBuffer) {
+        this.source = this.audioCtx.createBufferSource();
+        this.source.buffer = buffer;
+    } 
+
+    connectNodes() {
+        this.source.connect(this.gainNode);
+        this.gainNode.connect(this.analyser);
+        this.analyser.connect(this.audioCtx.destination);
     }
 
     async loadAudio(url: string): Promise<void> {
@@ -66,24 +98,15 @@ export class AudioManager {
             throw new Error(`Error ${response.status}: failed to fetch`);
         }
         console.log(`${response.status} fetch successful`);
-        
-        this.audioCtx = new AudioContext({
-            latencyHint: "interactive",
-            sampleRate: 44100});
-        this.analyser = this.audioCtx.createAnalyser(); 
-        this.analyser.fftSize = 2048;
-        this.analyser.minDecibels = -90;
-        this.bufferLength = this.analyser.frequencyBinCount;
-        const audioData = await response.arrayBuffer();
-        const buffer = await this.audioCtx.decodeAudioData(audioData);
-        this.source = this.audioCtx.createBufferSource();
-        this.source.buffer = buffer;
+
+        this.startCtx()
+        this.startAnalyser()
+        const buffer = await this.createBuffer(response) 
+        this.createSource(buffer)
+
         this.gainNode = this.audioCtx.createGain();
-        this.source.connect(this.gainNode);
-        this.gainNode.connect(this.analyser);
-        this.analyser.connect(this.audioCtx.destination);
+        this.connectNodes() 
         this.duration = buffer.duration;
-        console.log(`duration: ${this.duration}`)
         console.log('audio loaded successfully.');
     }
 
@@ -127,7 +150,7 @@ export class AudioManager {
     }
 
     async start() {
-        await this.fetchAudioIDs()
+        await this.fetchAudioURLs()
         let url = await this.fetchAudioURL()
         await this.loadAudio(url)
         await this.play(3, url)
