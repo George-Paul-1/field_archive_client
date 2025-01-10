@@ -5,7 +5,6 @@
 <script lang="ts">
     import { Visualiser } from "$lib";
     import { isAudioStarted } from "$lib/stores";
-    import { get } from "svelte/store";
     import { testEnv } from "../environments/test";
     import { AudioPlayer } from "$lib/audioPlayer";
 
