@@ -1,3 +1,7 @@
+<head>
+    <link href='./homestyle.css' rel='stylesheet'>
+</head>
+
 <script lang="ts">
     import { Visualiser } from "$lib";
     import { isAudioStarted } from "$lib/stores";
@@ -43,27 +47,3 @@
 {#if !isStarted} 
     <button on:click={startAudio}>Field Archive</button>
 {/if}   
-
-<style>
-    canvas {
-        display: block;
-        width: 100%;
-        height: 100%;
-    }
-    button {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        padding: 15px 30px;
-        font-size: 16px;
-        background-color: #ffffff;
-        color: rgb(0, 0, 0);
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-    button:hover {
-        background-color: #ffffff;
-    }
-</style>
