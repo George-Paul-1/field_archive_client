@@ -1,33 +1,39 @@
 <script lang="ts">
-    import { AudioManager, Visualiser } from "$lib";
+    import { Visualiser } from "$lib";
     import { isAudioStarted } from "$lib/stores";
     import { get } from "svelte/store";
     import { testEnv } from "../environments/test";
+    import { AudioPlayer } from "$lib/audioPlayer";
+
     
     let canvas: HTMLCanvasElement;
-    let manager: AudioManager;
+    let player: AudioPlayer;
     let visualiser: Visualiser;
-
     let isStarted: boolean;
+
+
     $: isAudioStarted.subscribe(value => isStarted = value);
 
     const startAudio = async() => {
         if (isStarted) return; 
         
-        const URL: string = testEnv.url
+        const dbConnectURL: string = testEnv.url
+        const apiURL: string = testEnv.url3
 
-        manager = new AudioManager(URL);
-        visualiser = new Visualiser(canvas);
-
-        visualiser.setCanvas();
-        await manager.start()
+        player = new AudioPlayer(dbConnectURL);
+        await player.initialise(apiURL);
         isStarted = true;
+        
+        visualiser = new Visualiser(canvas);
+        visualiser.setCanvas();
+
 
         function renderFrame(): void {
-            const freqData: Uint8Array = manager.getFrequencyData();
+            const freqData: Uint8Array = player.getFrequencyData();
             visualiser.draw(freqData);
             requestAnimationFrame(renderFrame);  
         }
+        await player.playNext();
         renderFrame();
         isAudioStarted.set(true);
     }

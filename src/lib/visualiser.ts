@@ -39,7 +39,7 @@ export class Visualiser {
 
     draw(dataArray: Uint8Array): void {
         const bufferLength = dataArray.length;
-        const h = this.H / bufferLength;
+        const h = this.H / (bufferLength * 0.75);
         
         let imgData = this.ctx.getImageData(1, 0, this.X, this.H);
         this.ctx.fillRect(0, 0, this.W, this.H);
@@ -47,7 +47,7 @@ export class Visualiser {
         this.ctx.imageSmoothingQuality = 'high';
 
         for (let i = 0; i < bufferLength; i++) {
-            let ratio = dataArray[i] / 255;
+            let ratio = Math.pow(dataArray[i] / 255, 1.5);
             let hue = Math.round(ratio * 120) + 170 % 360;
             this.ctx.lineWidth = 1;
             this.ctx.beginPath();
