@@ -3,17 +3,14 @@
 </head>
 
 <script lang="ts">
-    import { Visualiser } from "$lib";
+    import { Visualiser, AudioPlayer } from "$lib";
     import { isAudioStarted } from "$lib/stores";
     import { testEnv } from "../environments/test";
-    import { AudioPlayer } from "$lib/audioPlayer";
 
-    
     let canvas: HTMLCanvasElement;
     let player: AudioPlayer;
     let visualiser: Visualiser;
     let isStarted: boolean;
-
 
     $: isAudioStarted.subscribe(value => isStarted = value);
 
