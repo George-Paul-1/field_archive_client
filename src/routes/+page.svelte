@@ -1,7 +1,6 @@
 <head>
     <link href='./homestyle.css' rel='stylesheet'>
 </head>
-
 <script lang="ts">
     import { Visualiser, AudioPlayer } from "$lib";
     import { isAudioStarted } from "$lib/stores";
