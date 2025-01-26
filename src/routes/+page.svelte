@@ -36,7 +36,6 @@
         }
         await player.playNext();
         renderFrame();
-        isAudioStarted.set(true);
     }
 </script>
 <canvas bind:this={canvas}></canvas>
