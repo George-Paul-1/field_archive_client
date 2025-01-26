@@ -1,3 +1,5 @@
+// Looking to implement interactive mouse feature
+
 export class Visualiser {
     
     private cvs: HTMLCanvasElement;
