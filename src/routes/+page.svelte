@@ -10,18 +10,20 @@
     let player: AudioPlayer;
     let visualiser: Visualiser;
     let isStarted: boolean;
-
+    let isFading: boolean; 
     $: isAudioStarted.subscribe(value => isStarted = value);
 
     const startAudio = async() => {
         if (isStarted) return; 
+
+        isFading = true;
         
         const dbConnectURL: string = testEnv.url
         const apiURL: string = testEnv.url3
 
         player = new AudioPlayer(dbConnectURL);
         await player.initialise(apiURL);
-        isStarted = true;
+        setTimeout(() => isStarted = true, 3000);
         
         visualiser = new Visualiser(canvas);
         visualiser.setCanvas();
@@ -40,5 +42,9 @@
 <canvas bind:this={canvas}></canvas>
 
 {#if !isStarted} 
-    <button on:click={startAudio}>Field Archive</button>
+    <button 
+        on:click={startAudio}
+        class:fade-out={isFading}
+        >Field Archive
+    </button>
 {/if}   
