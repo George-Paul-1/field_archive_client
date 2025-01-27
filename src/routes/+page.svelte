@@ -3,7 +3,6 @@
 </head>
 <script lang="ts">
     import { Visualiser, AudioPlayer } from "$lib";
-    import { isAudioStarted } from "$lib/stores";
     import { testEnv } from "../environments/test";
 
     let canvas: HTMLCanvasElement;
@@ -11,19 +10,19 @@
     let visualiser: Visualiser;
     let isStarted: boolean;
     let isFading: boolean; 
-    $: isAudioStarted.subscribe(value => isStarted = value);
 
-    const startAudio = async() => {
+    const start = async() => {
         if (isStarted) return; 
-
-        isFading = true;
         
+        isFading = true;
+        setTimeout(() => isStarted = true, 3000);
+
         const dbConnectURL: string = testEnv.url
         const apiURL: string = testEnv.url3
 
         player = new AudioPlayer(dbConnectURL);
         await player.initialise(apiURL);
-        setTimeout(() => isStarted = true, 3000);
+        
         
         visualiser = new Visualiser(canvas);
         visualiser.setCanvas();
@@ -38,12 +37,26 @@
         renderFrame();
     }
 </script>
-<canvas bind:this={canvas}></canvas>
-
 {#if !isStarted} 
     <button 
-        onclick={startAudio}
+        onclick={start}
         class:fade-out={isFading}
         >Field Archive
     </button>
+{/if}
+{#if isFading} 
+    <nav class:fade-in={isFading}>
+        <ul>
+            <li>
+                <a href="/about">About</a>
+            </li>
+        </ul>
+    </nav>
 {/if}   
+<canvas bind:this={canvas}></canvas>
+
+
+
+
+
+
