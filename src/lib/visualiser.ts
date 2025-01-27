@@ -6,25 +6,11 @@ export class Visualiser {
     private ctx: CanvasRenderingContext2D;
     private W: number;
     private H: number;
-    private X: number;
-    
-    private mouseX: number | null = null; 
-    private mouseY: number | null = null;
+    private X: number; 
     
     constructor(canvas: HTMLCanvasElement) {
         this.cvs = canvas;
-        this.ctx = this.cvs.getContext('2d') as CanvasRenderingContext2D;
-        
-        this.cvs.addEventListener('mousemove', (e) => {
-            const rect = this.cvs.getBoundingClientRect();
-            this.mouseX = e.clientX - rect.left;
-            this.mouseY = e.clientY - rect.top; 
-            });
-        
-        this.cvs.addEventListener('mouseleave', () => {
-            this.mouseX = null;
-            this.mouseY = null;
-        });
+        this.ctx = this.cvs.getContext('2d') as CanvasRenderingContext2D; 
         
         // Set canvas resolution for high-DPI (retina) displays
         const ratio = window.devicePixelRatio || 1;
