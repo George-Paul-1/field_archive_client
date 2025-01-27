@@ -29,7 +29,7 @@ export class Visualiser {
     }
 
     setCanvas(): void {
-        this.ctx.fillStyle = 'hsl(0, 0.00%, 0.00%)';
+        this.ctx.fillStyle = 'hsl(0, 0.00%, 100.00%)';
         this.ctx.fillRect(0, 0, this.W, this.H);
     }
 
