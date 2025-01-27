@@ -42,7 +42,7 @@
 
 {#if !isStarted} 
     <button 
-        on:click={startAudio}
+        onclick={startAudio}
         class:fade-out={isFading}
         >Field Archive
     </button>
