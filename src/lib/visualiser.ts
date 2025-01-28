@@ -10,22 +10,17 @@ export class Visualiser {
     
     constructor(canvas: HTMLCanvasElement) {
         this.cvs = canvas;
-        this.ctx = this.cvs.getContext('2d') as CanvasRenderingContext2D; 
-        
-        // Set canvas resolution for high-DPI (retina) displays
+        this.ctx = this.cvs.getContext('2d', { willReadFrequently: true }) as CanvasRenderingContext2D; 
         const ratio = window.devicePixelRatio || 1;
         const width = window.innerWidth * ratio;
         const height = window.innerHeight * ratio;
 
-        // Update canvas width and height
         this.cvs.width = width;
         this.cvs.height = height;
-        
-        // Set CSS width and height to match the screen size
+
         this.cvs.style.width = `${window.innerWidth}px`;
         this.cvs.style.height = `${window.innerHeight}px`;
-        
-        // Scale the context to match the device pixel ratio
+
         this.ctx.scale(ratio, ratio);
 
         this.W = (this.cvs.width = window.innerWidth);
@@ -34,8 +29,10 @@ export class Visualiser {
     }
 
     setCanvas(): void {
-        this.ctx.fillStyle = 'hsl(0, 100%, 100%)';
-        this.ctx.fillRect(0, 0, this.W, this.H);
+        const nav = document.querySelector('nav')
+        const navH = nav ? nav.offsetHeight : 0
+        this.ctx.fillStyle = 'hsl(0, 0.00%, 100.00%)';
+        this.ctx.fillRect(0, 0, this.W, (this.H + navH));
     }
 
     draw(dataArray: Uint8Array): void {
@@ -49,10 +46,10 @@ export class Visualiser {
 
         for (let i = 0; i < bufferLength; i++) {
             let ratio = Math.pow(dataArray[i] / 255, 1.5);
-            let hue = Math.round(ratio * 120) + 170 % 360;
+            let hue = Math.round(ratio * 120) + 180 % 360;
             this.ctx.lineWidth = 1;
             this.ctx.beginPath();
-            let sat = '70%';
+            let sat = '100%';
             let lit = 10 + (70 * ratio) + '%';
             this.ctx.strokeStyle = `hsl(${hue}, ${sat}, ${lit}, ${ratio})`;
             this.ctx.moveTo(this.X, this.H - (i * h));
