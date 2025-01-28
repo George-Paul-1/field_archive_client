@@ -33,12 +33,15 @@
         if (map) map.remove();
     });
 </script>
-<div class="map" class:fade-in={$isFading} use:initMap></div>
+<section class="map_box_container">
+    <div id='map' class:fade-in={$isFading} use:initMap></div>
+</section>  
 <style>
-    .map {
+    #map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
       width: 100%;
-      height: 1000px;
-      overflow: hidden;
     }
     .fade-in {
     animation: nav-fadein 1s linear forwards;
