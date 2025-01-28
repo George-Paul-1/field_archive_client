@@ -10,7 +10,7 @@ export class Visualiser {
     
     constructor(canvas: HTMLCanvasElement) {
         this.cvs = canvas;
-        this.ctx = this.cvs.getContext('2d') as CanvasRenderingContext2D; 
+        this.ctx = this.cvs.getContext('2d', { willReadFrequently: true }) as CanvasRenderingContext2D; 
         const ratio = window.devicePixelRatio || 1;
         const width = window.innerWidth * ratio;
         const height = window.innerHeight * ratio;

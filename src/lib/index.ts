@@ -4,3 +4,4 @@ export { Visualiser } from "./visualiser";
 export { AudioRepository } from "./audioRepository";
 export { AudioPlayer } from "./audioPlayer";
 export { AudioContextManager } from "./audioContextManager";
+export { mapboxgl, key } from './mapboxgl';

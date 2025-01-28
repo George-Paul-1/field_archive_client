@@ -3,17 +3,17 @@
     import { Visualiser } from "$lib";
     import { audioPlayer } from '../stores/audio';
     import { testEnv } from "../environments/test";
+    import { initialFade, isFading, isStarted, navigating } from "../stores/fades";
 
     let canvas: HTMLCanvasElement;
     let visualiser: Visualiser;
-    let isStarted: boolean;
-    let isFading: boolean; 
 
     const start = async() => {
-        isFading = true;
+        isFading.set(true);
+        initialFade.set(true)
         audioPlayer.subscribe(async player => {      
         if (player) {    
-            setTimeout(() => isStarted = true, 3000);
+            setTimeout(() => isStarted.set(true), 3000);
             const dbConnectURL: string = testEnv.url
             const apiURL: string = testEnv.url3
             visualiser = new Visualiser(canvas);
@@ -29,26 +29,18 @@
             renderFrame();
         }});
     }
+    
 </script>
-
-{#if !isStarted} 
-    <button 
-        onclick={start}
-        class:fade-out={isFading}
-        >Field Archive
-    </button>
-{/if}
-{#if isFading} 
-    <nav class:fade-in={isFading}>
-        <ul>
-            <li>
-                <a href="/map">Map</a>
-            </li>
-        </ul>
-    </nav>
-{/if}   
-<canvas bind:this={canvas}></canvas>
-
+<div class:fade-out={$navigating}>
+    {#if !$isStarted} 
+        <button 
+            onclick={start}
+            class:fade-out={$isFading}
+            >Field Archive
+        </button>
+    {/if}
+    <canvas bind:this={canvas}></canvas>
+</div>
 
 
 
