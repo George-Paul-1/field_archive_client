@@ -10,8 +10,8 @@
     let isFading: boolean; 
 
     const start = async() => {
-        if (isStarted) return; 
-        audioPlayer.subscribe(async player => {      isFading = true;
+        isFading = true;
+        audioPlayer.subscribe(async player => {      
         if (player) {    
             setTimeout(() => isStarted = true, 3000);
             const dbConnectURL: string = testEnv.url
