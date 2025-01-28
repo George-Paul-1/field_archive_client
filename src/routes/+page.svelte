@@ -1,42 +1,36 @@
-<head>
-    <link href='./homestyle.css' rel='stylesheet'>
-</head>
+<link href='./homestyle.css' rel='stylesheet'>
 <script lang="ts">
-    import { Visualiser, AudioPlayer } from "$lib";
+    import { Visualiser } from "$lib";
+    import { audioPlayer } from '../stores/audio';
     import { testEnv } from "../environments/test";
 
     let canvas: HTMLCanvasElement;
-    let player: AudioPlayer;
     let visualiser: Visualiser;
     let isStarted: boolean;
     let isFading: boolean; 
 
     const start = async() => {
         if (isStarted) return; 
-        
-        isFading = true;
-        setTimeout(() => isStarted = true, 3000);
+        audioPlayer.subscribe(async player => {      isFading = true;
+        if (player) {    
+            setTimeout(() => isStarted = true, 3000);
+            const dbConnectURL: string = testEnv.url
+            const apiURL: string = testEnv.url3
+            visualiser = new Visualiser(canvas);
+            visualiser.setCanvas();
 
-        const dbConnectURL: string = testEnv.url
-        const apiURL: string = testEnv.url3
-
-        player = new AudioPlayer(dbConnectURL);
-        await player.initialise(apiURL);
-        
-        
-        visualiser = new Visualiser(canvas);
-        visualiser.setCanvas();
-
-
-        function renderFrame(): void {
-            const freqData: Uint8Array = player.getFrequencyData();
-            visualiser.draw(freqData);
-            requestAnimationFrame(renderFrame);  
-        }
-        await player.playNext();
-        renderFrame();
+            function renderFrame(): void {
+                if (player) {
+                const freqData: Uint8Array = player.getFrequencyData();
+                visualiser.draw(freqData);
+                requestAnimationFrame(renderFrame);  
+            }};
+            await player.playNext();
+            renderFrame();
+        }});
     }
 </script>
+
 {#if !isStarted} 
     <button 
         onclick={start}
@@ -48,12 +42,13 @@
     <nav class:fade-in={isFading}>
         <ul>
             <li>
-                <a href="/about">About</a>
+                <a href="/map">Map</a>
             </li>
         </ul>
     </nav>
 {/if}   
 <canvas bind:this={canvas}></canvas>
+
 
 
 

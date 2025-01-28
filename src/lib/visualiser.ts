@@ -29,8 +29,10 @@ export class Visualiser {
     }
 
     setCanvas(): void {
+        const nav = document.querySelector('nav')
+        const navH = nav ? nav.offsetHeight : 0
         this.ctx.fillStyle = 'hsl(0, 0.00%, 100.00%)';
-        this.ctx.fillRect(0, 0, this.W, this.H);
+        this.ctx.fillRect(0, 0, this.W, (this.H + navH));
     }
 
     draw(dataArray: Uint8Array): void {
