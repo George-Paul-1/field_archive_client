@@ -29,11 +29,11 @@ button {
 }
 
 .fade-out{
-    animation: title-fadeout 2s linear forwards;
+    animation: title-fadeout 1s linear forwards;
 }
 
 .fade-in{
-    animation: nav-fadein 2s linear forwards;
+    animation: nav-fadein 1s linear forwards;
 }
 
 @keyframes title-fadeout 

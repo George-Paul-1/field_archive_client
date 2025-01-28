@@ -13,7 +13,7 @@
         initialFade.set(true)
         audioPlayer.subscribe(async player => {      
         if (player) {    
-            setTimeout(() => isStarted.set(true), 3000);
+            setTimeout(() => isStarted.set(true), 1000);
             const dbConnectURL: string = testEnv.url
             const apiURL: string = testEnv.url3
             visualiser = new Visualiser(canvas);

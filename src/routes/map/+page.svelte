@@ -2,6 +2,7 @@
     import { isFading } from '../../stores/fades';  
     import { onDestroy, setContext, onMount } from 'svelte';
     import { mapboxgl, key } from '$lib'; 
+    import { testEnv } from '../../environments/test';
 
     setContext(key, {
         getMap: () => map,
@@ -18,6 +19,16 @@
         });
     }
 
+    const testAPI = () => {
+        const url = testEnv.url4 
+        fetch(url).then((response) => {
+            if (!response.ok) {
+                return
+            }
+            return response.json()
+        }).then(res => {console.log(res)})
+    }
+
     onDestroy(() => {
         if (map) map.remove();
     });
@@ -26,10 +37,11 @@
 <style>
     .map {
       width: 100%;
-      height: 1000px; /* Ensure the map has a height */
+      height: 1000px;
+      overflow: hidden;
     }
     .fade-in {
-    animation: nav-fadein 2s linear forwards;
+    animation: nav-fadein 1s linear forwards;
     }
     @keyframes nav-fadein 
     {
