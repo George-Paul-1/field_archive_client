@@ -2,20 +2,27 @@
 <script lang="ts">
     import { Visualiser } from "$lib";
     import { audioPlayer } from '../stores/audio';
-    import { testEnv } from "../environments/test";
     import { initialFade, isFading, isStarted, navigating } from "../stores/fades";
 
     let canvas: HTMLCanvasElement;
     let visualiser: Visualiser;
 
+    let dbConnectURL: string
+    let apiURL: string 
+
     const start = async() => {
+
+        const response = await fetch('/api/env');
+        const data = await response.json();
+        dbConnectURL = data.url 
+        apiURL = data.url3
+
         isFading.set(true);
         initialFade.set(true)
         audioPlayer.subscribe(async player => {      
         if (player) {    
             setTimeout(() => isStarted.set(true), 1000);
-            const dbConnectURL: string = testEnv.url
-            const apiURL: string = testEnv.url3
+            
             visualiser = new Visualiser(canvas);
             visualiser.setCanvas();
 
