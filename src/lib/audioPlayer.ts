@@ -9,12 +9,12 @@ export class AudioPlayer {
     private duration: number | null = null
     private timeoutId: number | null = null;
     
-    constructor(dbConnect: string) {
-        this.repo = new AudioRepository(dbConnect); 
+    constructor() {
+        this.repo = new AudioRepository(); 
     }
 
-    async initialise(api: string): Promise<void> {
-        await this.repo.fetchSize(api);
+    async initialise(): Promise<void> {
+        await this.repo.fetchSize();
     }
 
     async playNext(fadeIn: number = 3): Promise<void> {
