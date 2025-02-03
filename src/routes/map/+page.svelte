@@ -1,8 +1,7 @@
 <script lang="ts">
     import { isFading } from '../../stores/fades';  
     import { onDestroy, setContext, onMount } from 'svelte';
-    import { mapboxgl, key } from '$lib'; 
-    import { testEnv } from '../../environments/test';
+    import { mapboxgl, key } from '$lib';
 
     setContext(key, {
         getMap: () => map,
@@ -17,16 +16,6 @@
             center: [-103.5917, 40.6699],
 			zoom: 3
         });
-    }
-
-    const testAPI = () => {
-        const url = testEnv.url4 
-        fetch(url).then((response) => {
-            if (!response.ok) {
-                return
-            }
-            return response.json()
-        }).then(res => {console.log(res)})
     }
 
     onDestroy(() => {

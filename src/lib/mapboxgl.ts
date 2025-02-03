@@ -1,5 +1,5 @@
 import mapboxgl from 'mapbox-gl'
-import { testEnv } from '../environments/test'
+import { testEnv } from '../environments/test';
 
 mapboxgl.accessToken = testEnv.map;
 
