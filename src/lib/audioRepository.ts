@@ -9,14 +9,14 @@ export class AudioRepository {
 
     async fetchSize(): Promise<void> {
         try {
-        const response = await fetch('/api/recordings/count');
+        const response: Response = await fetch('/api/recordings/count');
         if (! response.ok) {
             throw new Error("Trouble fetching count");
         }
         const data = await response.json(); 
         this.length = data.count; 
         while (this.idStore.size < data.count) {
-            let n= Math.floor(Math.random() * (data.count - 1 + 1) + 1); 
+            let n: number = Math.floor(Math.random() * (data.count - 1 + 1) + 1); 
             this.idStore.add(n)
         }
         } catch (error) {

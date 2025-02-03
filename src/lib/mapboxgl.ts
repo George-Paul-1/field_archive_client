@@ -1,7 +1,6 @@
 import mapboxgl from 'mapbox-gl'
-import { testEnv } from '../environments/test';
 
-mapboxgl.accessToken = testEnv.map;
+mapboxgl.accessToken = "pk.eyJ1IjoibWlnaHR5Z29yZyIsImEiOiJjbTZnbnFzb3owM2EwMmlxeDhjczVuNGR0In0.dp5JHjWEtzAx09_InF_Pxg"
 
 const key = Symbol() 
 

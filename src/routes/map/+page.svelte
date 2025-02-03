@@ -1,6 +1,6 @@
 <script lang="ts">
     import { isFading } from '../../stores/fades';  
-    import { onDestroy, setContext, onMount } from 'svelte';
+    import { onDestroy, setContext} from 'svelte';
     import { mapboxgl, key } from '$lib';
 
     setContext(key, {

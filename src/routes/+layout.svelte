@@ -5,13 +5,10 @@
     import { goto } from '$app/navigation';
     import 'mapbox-gl/dist/mapbox-gl.css'; 
     
-    onMount(() => {
-        console.log('creating fades...')
+    onMount(() => { 
         isFading.set(false)
         isStarted.set(false)
-        navigating.set(false)
-        
-        console.log('mounting player...')
+        navigating.set(false) 
         audioPlayer.subscribe(player => {
             if (!player) initialiseAudioPlayer();
         });   
