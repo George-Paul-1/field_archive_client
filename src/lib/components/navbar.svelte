@@ -1,7 +1,7 @@
 <link href="./navstyle.css" rel="stylesheet"/>
 <script lang="ts">
     import { goto } from '$app/navigation';
-    import { isFading, isStarted, navigating, initialFade } from '../stores/fades';
+    import { isFading, isStarted, navigating, initialFade } from '../../stores/fades';
     
     const handleNavigation = (event: MouseEvent, href: string) => {
         initialFade.set(false);

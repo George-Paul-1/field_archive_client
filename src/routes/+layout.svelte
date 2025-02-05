@@ -3,7 +3,7 @@
     import { audioPlayer, initialiseAudioPlayer } from '../stores/audio';
     import { isFading, isStarted, navigating } from '../stores/fades';
     import 'mapbox-gl/dist/mapbox-gl.css'; 
-    import Navbar from './navbar.svelte';
+    import Navbar from '../lib/components/navbar.svelte';
 
     onMount(() => { 
         isFading.set(false)
