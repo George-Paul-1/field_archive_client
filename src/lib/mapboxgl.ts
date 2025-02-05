@@ -1,7 +1,7 @@
 import mapboxgl from 'mapbox-gl'
-import { testEnv } from '../environments/test';
+import { PUBLIC_MAP } from '$env/static/public'
 
-mapboxgl.accessToken = testEnv.map;
+mapboxgl.accessToken = PUBLIC_MAP
 
 const key = Symbol() 
 

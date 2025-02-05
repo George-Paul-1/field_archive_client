@@ -2,7 +2,6 @@
 <script lang="ts">
     import { Visualiser } from "$lib";
     import { audioPlayer } from '../stores/audio';
-    import { testEnv } from "../environments/test";
     import { initialFade, isFading, isStarted, navigating } from "../stores/fades";
 
     let canvas: HTMLCanvasElement;
@@ -40,6 +39,7 @@
     {/if}
     <canvas bind:this={canvas}></canvas>
 </div>
+
 
 
 
