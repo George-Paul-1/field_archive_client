@@ -1,6 +1,7 @@
 import mapboxgl from 'mapbox-gl'
+import { PUBLIC_MAP } from '$env/static/public'
 
-mapboxgl.accessToken = "pk.eyJ1IjoibWlnaHR5Z29yZyIsImEiOiJjbTZnbnFzb3owM2EwMmlxeDhjczVuNGR0In0.dp5JHjWEtzAx09_InF_Pxg"
+mapboxgl.accessToken = PUBLIC_MAP
 
 const key = Symbol() 
 
