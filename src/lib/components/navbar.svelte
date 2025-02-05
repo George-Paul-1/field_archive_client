@@ -1,8 +1,11 @@
 <link href="./navstyle.css" rel="stylesheet"/>
 <script lang="ts">
     import { goto } from '$app/navigation';
-    import { isFading, isStarted, navigating, initialFade } from '../../stores/fades';
-    
+    import {isStarted, navigating, initialFade } from '../../stores/fades';
+   import { page } from '$app/state';
+   
+   const url = page.url 
+
     const handleNavigation = (event: MouseEvent, href: string) => {
         initialFade.set(false);
         event.preventDefault(); 
@@ -13,7 +16,7 @@
 </script>
 
 <div>
-    {#if $isStarted} 
+    {#if $isStarted || url.pathname !== "/"} 
     <nav class:fade-in={$initialFade}>
         <ul>
             <li>

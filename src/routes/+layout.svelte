@@ -5,7 +5,8 @@
     import 'mapbox-gl/dist/mapbox-gl.css'; 
     import Navbar from '../lib/components/navbar.svelte';
 
-    onMount(() => { 
+    onMount(() => {
+        console.log('mounting layout...') 
         isFading.set(false)
         isStarted.set(false)
         navigating.set(false) 
