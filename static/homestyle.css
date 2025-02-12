@@ -32,10 +32,6 @@ button {
     animation: title-fadeout 1s linear forwards;
 }
 
-.fade-in{
-    animation: nav-fadein 1s linear forwards;
-}
-
 @keyframes title-fadeout 
 {
     0% 
@@ -49,21 +45,5 @@ button {
         opacity:0;
         filter: blur(40px);
         font-color: #ffffff;
-    }
-}
-
-@keyframes nav-fadein 
-{
-    0% 
-    {
-        opacity:0;
-        filter: blur(40px);
-        font-color: #ffffff;
-    }
-    100% 
-    {
-        opacity:1;
-        filter: blur(0px);
-        font-color: #000000;
     }
 }

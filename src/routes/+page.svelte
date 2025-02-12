@@ -6,7 +6,7 @@
 
     let canvas: HTMLCanvasElement;
     let visualiser: Visualiser;
-
+    
     const start = async() => {
         isFading.set(true);
         initialFade.set(true)

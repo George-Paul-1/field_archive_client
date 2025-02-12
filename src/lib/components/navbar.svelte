@@ -2,9 +2,9 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
     import {isStarted, navigating, initialFade } from '../../stores/fades';
-   import { page } from '$app/state';
+    import { page } from '$app/state';
    
-   const url = page.url 
+    var url = page.url 
 
     const handleNavigation = (event: MouseEvent, href: string) => {
         initialFade.set(false);
@@ -14,11 +14,10 @@
         }, 1000);
     }
 </script>
-
 <div>
-    {#if $isStarted || url.pathname !== "/"} 
-    <nav class:fade-in={$initialFade}>
-        <ul>
+    {#if $isStarted || url.pathname !== "/"}  
+    <nav class="nav-container" class:fade-in={$initialFade}>
+        <ul class='nav-element'>
             <li>
                 <a href="/map" onclick={(event) => {
                     navigating.set(true);
@@ -35,3 +34,4 @@
     </nav>
     {/if}
 </div>
+

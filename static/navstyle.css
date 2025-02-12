@@ -12,15 +12,33 @@ z-index: 1000;
 ul {
     display: flex;
     list-style: none;
-    margin-left: auto;
 } 
-li {
-    margin-right: 20px;
-    
+.nav-element li {
+    text-align: left;
+    margin-left: 20px
 } 
 a {
     text-decoration: none;
     color: rgb(0, 0, 0);
     font-family: Verdana;
     
+}
+.fade-in{
+    animation: nav-fadein 1s linear forwards;
+}
+
+@keyframes nav-fadein 
+{
+    0% 
+    {
+        opacity:0;
+        filter: blur(40px);
+        font-color: #ffffff;
+    }
+    100% 
+    {
+        opacity:1;
+        filter: blur(0px);
+        font-color: #000000;
+    }
 }

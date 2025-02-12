@@ -4,6 +4,7 @@
     import { isFading, isStarted, navigating } from '../stores/fades';
     import 'mapbox-gl/dist/mapbox-gl.css'; 
     import Navbar from '../lib/components/navbar.svelte';
+    import Player from '$lib/components/player.svelte';
 
     onMount(() => {
         console.log('mounting layout...') 
@@ -15,7 +16,6 @@
         });   
         });
 </script>
+<Player /> 
 <Navbar /> 
-<div class="player">
-</div>
 <slot/>
