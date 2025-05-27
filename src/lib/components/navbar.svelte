@@ -2,7 +2,7 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
     import {isStarted, navigating, initialFade } from '../../stores/fades';
-   import { page } from '$app/state';
+    import { page } from '$app/state';
    
    const url = page.url 
 

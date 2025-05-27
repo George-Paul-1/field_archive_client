@@ -1,4 +1,4 @@
-<link href='./homestyle.css' rel='stylesheet'>
+<link href='homestyle.css' rel='stylesheet'>
 <script lang="ts">
     import { Visualiser } from "$lib";
     import { audioPlayer } from '../stores/audio';
